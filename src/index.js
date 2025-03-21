@@ -9,7 +9,7 @@ addRouteHandlers(app);
 
 try {
     await connect();
-    app.listen({ port: config.port });
+    await app.listen({ port: config.port });
 } 
 catch (error) {
     app.log.error(error);
