@@ -7,18 +7,23 @@ import addRouteHandlers from "./handlers/index.js";
 
 const app = fastify({ logger: true });
 
-await app.register(cors, {});
+await app.register(cors, {
+  origin: 'https://webdev-kyllian.netlify.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+});
 
 await app.register(jwt, {
-    secret: config.jwtSecret,
+  secret: config.JWT_SECRET,
 });
 
 addRouteHandlers(app);
 
 try {
-    await connect();
-    await app.listen({ port: config.port, host: "0.0.0.0" });
+  await connect();
+  await app.listen({ port: config.PORT || 3000, host: "0.0.0.0" });
 } catch (error) {
-    app.log.error(error);
-    process.exit(1);
+  app.log.error(error);
+  process.exit(1);
 }
