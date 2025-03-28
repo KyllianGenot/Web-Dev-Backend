@@ -15,7 +15,7 @@ await app.register(cors, {
 });
 
 await app.register(jwt, {
-  secret: config.JWT_SECRET,
+  secret: config.jwtSecret,
 });
 
 addRouteHandlers(app);
