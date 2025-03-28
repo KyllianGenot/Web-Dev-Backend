@@ -1,8 +1,62 @@
-POST http://localhost:3000/signup HTTP/1.1
+# Test 1: Inscription d'un nouvel utilisateur
+POST http://localhost:4000/api/users HTTP/1.1
 Content-Type: application/json
 
 {
-    "username": "test1",
-    "password": "test2",
-    "email": "test@gmail.com"
+    "username": "testuser",
+    "password": "password123",
+    "email": "testuser@example.com"
 }
+
+###
+
+# Test 2: Connexion de l'utilisateur (récupérer le token)
+POST http://localhost:4000/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "testuser@example.com",
+    "password": "password123"
+}
+
+###
+
+# Test 3: Créer un to-do (avec le token)
+POST http://localhost:4000/api/todos HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZTZjOTc1MTVhZGU0NWZhOTQ2NzVkMCIsImVtYWlsIjoidGVzdHVzZXJAZXhhbXBsZS5jb20iLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNzQzMTc4MjI5LCJleHAiOjE3NDMxODE4Mjl9.XDZ159L_o_1DQYD54QHv8Y_VtNsWdUtsBHsA5MmADdk
+
+{
+    "title": "My first todo",
+    "description": "This is a test todo"
+}
+
+###
+
+# Test 4: Récupérer tous les to-dos de l'utilisateur
+GET http://localhost:4000/api/todos HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZTZjOTc1MTVhZGU0NWZhOTQ2NzVkMCIsImVtYWlsIjoidGVzdHVzZXJAZXhhbXBsZS5jb20iLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNzQzMTc4MjI5LCJleHAiOjE3NDMxODE4Mjl9.XDZ159L_o_1DQYD54QHv8Y_VtNsWdUtsBHsA5MmADdk
+
+###
+
+# Test 5: Mettre à jour un to-do (remplace <todo_id> par l'ID du to-do créé)
+PUT http://localhost:4000/api/todos/67e6ca0515ade45fa94675d4 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZTZjOTc1MTVhZGU0NWZhOTQ2NzVkMCIsImVtYWlsIjoidGVzdHVzZXJAZXhhbXBsZS5jb20iLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNzQzMTc4MjI5LCJleHAiOjE3NDMxODE4Mjl9.XDZ159L_o_1DQYD54QHv8Y_VtNsWdUtsBHsA5MmADdk
+
+{
+    "title": "Updated todo",
+    "description": "This is an updated test todo",
+    "completed": true
+}
+
+###
+
+# Test 6: Supprimer un to-do (remplace <todo_id> par l'ID du to-do)
+DELETE http://localhost:4000/api/todos/67e6ca0515ade45fa94675d4 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZTZjOTc1MTVhZGU0NWZhOTQ2NzVkMCIsImVtYWlsIjoidGVzdHVzZXJAZXhhbXBsZS5jb20iLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNzQzMTc4MjI5LCJleHAiOjE3NDMxODE4Mjl9.XDZ159L_o_1DQYD54QHv8Y_VtNsWdUtsBHsA5MmADdk
+
+###
+
+# Test 7: Tester une route protégée sans token (devrait échouer)
+GET http://localhost:4000/api/todos HTTP/1.1
