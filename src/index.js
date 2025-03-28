@@ -8,7 +8,7 @@ import addRouteHandlers from "./handlers/index.js";
 const app = fastify({ logger: true });
 
 await app.register(cors, {
-  origin: 'https://webdev-kyllian.netlify.app',
+  origin: ['https://webdev-kyllian.netlify.app', 'http://127.0.0.1:5173'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
